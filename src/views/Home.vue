@@ -11,15 +11,15 @@
       </div>
     </div>
     <div class="section">
-  <div class="box">
+  <div class="box" v-for="(item, index) in result" :key="index">
     <article class="media">
       <div class="media-left">
-        <figure class="image is-64x64"> <img alt="Image" src="https://s3.amazonaws.com/uifaces/faces/twitter/zeldman/128.jpg">
+        <figure class="image is-64x64"> <img alt="Image" :src="item.artworkUrl100">
         </figure>
       </div>
       <div class="media-content">
         <div class="content">
-          <p> <strong> John Smith </strong> <small> @johnsmith </small> <small> 31m </small>
+          <p> <strong> {{item.collectionName}} </strong> <small> {{item.artistName}} </small> <small> {{item.primaryGenreName}} </small>
             <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
           </p>
         </div>
@@ -40,7 +40,6 @@
     </article>
   </div>
     </div>
-    {{result}}
   </div>
 </template>
 
