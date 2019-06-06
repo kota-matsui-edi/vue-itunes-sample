@@ -3,10 +3,10 @@
     <div class="section">
       <div class="field has-addons">
         <p class="control">
-          <input class="input" type="text" placeholder="Find a repository">
+          <input class="input" type="text" placeholder="Find a repository" v-model="serchTerm">
         </p>
         <p class="control">
-          <a class="button is-info">Search</a>
+          <a class="button is-info" @click="doSearch">Search</a>
         </p>
       </div>
     </div>
@@ -40,17 +40,31 @@
     </article>
   </div>
     </div>
+    {{result}}
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
-
+import axios from 'axios'
 @Component({
   components: {
     HelloWorld
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  serchTerm = ''
+  result: any[] = []
+  doSearch () {
+    if (!this.serchTerm) return
+    console.log(`https://itunes.apple.com/search?term=${encodeURI(this.serchTerm)}&entity=album`)
+    axios.get(`https://itunes.apple.com/search?term=${encodeURI(this.serchTerm)}&entity=album`).then(
+      res => {
+        console.log(res)
+        this.result = res.data.results
+      }
+    ).catch(err => console.log(err))
+  }
+}
 </script>
