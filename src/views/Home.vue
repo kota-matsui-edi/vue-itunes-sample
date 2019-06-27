@@ -1,67 +1,39 @@
 <template>
   <div class="home">
     <div class="section">
-      <div class="field has-addons">
-        <p class="control">
-          <input class="input" type="text" placeholder="Find a repository" v-model="serchTerm">
-        </p>
-        <p class="control">
-          <a class="button is-info" @click="doSearch">Search</a>
-        </p>
-      </div>
+      <search-field @search="doSearch" :term="searchTerm"/>
     </div>
     <div class="section">
-      <div class="box" v-for="(item, index) in result" :key="index">
-        <article class="media">
-          <div class="media-left">
-            <figure class="image is-64x64"> <img alt="Image" :src="item.artworkUrl100">
-            </figure>
-          </div>
-          <div class="media-content">
-            <div class="content">
-              <p> <strong> {{item.collectionName}} </strong> <small> {{item.artistName}} </small> <small> {{item.primaryGenreName}} </small>
-                <br> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-              </p>
-            </div>
-            <nav class="level">
-              <div class="level-left">
-                <a class="level-item">
-                  <span class="icon is-small"> <i class="fa fa-reply"> </i> </span>
-                </a>
-                <a class="level-item">
-                  <span class="icon is-small"> <i class="fa fa-retweet"> </i> </span>
-                </a>
-                <a class="level-item">
-                  <span class="icon is-small"> <i class="fa fa-heart"> </i> </span>
-                </a>
-              </div>
-            </nav>
-          </div>
-        </article>
-      </div>
+      <album-result-box v-for="(item, index) in boxContents" :key="index" :contents="item"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
-import axios from 'axios'
+import SearchField from '@/components/field/SearchField.vue'
+import AlbumResultBox from '@/components/box/AlbumResultBox.vue'
+import axios, { AxiosResponse } from 'axios'
+import AlbumResultContents from '@/classes/AlbumResultContents'
+import AlbumSearchResult from '@/classes/AlbumSearchResult'
 @Component({
   components: {
-    HelloWorld
+    SearchField,
+    AlbumResultBox
   }
 })
 export default class Home extends Vue {
-  serchTerm = ''
-  result: any[] = []
-  doSearch () {
-    if (!this.serchTerm) return
-    console.log(`https://itunes.apple.com/search?term=${encodeURI(this.serchTerm)}&entity=album`)
-    axios.get(`https://itunes.apple.com/search?term=${encodeURI(this.serchTerm)}&entity=album`).then(
-      res => {
+  searchTerm = 'parent value'
+  result: AlbumSearchResult[] = []
+  get boxContents (): AlbumResultContents[] {
+    return this.result.map(el => el.albumBoxContents)
+  }
+  doSearch (term: string) {
+    if (!term) return
+    axios.get(`https://itunes.apple.com/search?term=${encodeURI(term)}&entity=album`).then(
+      (res: AxiosResponse<{results: APIresults.ItunesSearchAPI[]}>) => {
         console.log(res)
-        this.result = res.data.results
+        this.result = res.data.results.map(el => new AlbumSearchResult(el))
       }
     ).catch(err => console.log(err))
   }
