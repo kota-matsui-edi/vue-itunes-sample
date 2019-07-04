@@ -12,9 +12,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import SearchField from '@/components/field/SearchField.vue'
-import AlbumResultBox from '@/components/box/AlbumResultBox.vue'
+import AlbumResultBox, { AlbumResultBoxProps } from '@/components/box/AlbumResultBox.vue'
 import axios, { AxiosResponse } from 'axios'
-import AlbumResultContents from '@/classes/AlbumResultContents'
 import AlbumSearchResult from '@/classes/AlbumSearchResult'
 @Component({
   components: {
@@ -23,9 +22,9 @@ import AlbumSearchResult from '@/classes/AlbumSearchResult'
   }
 })
 export default class Home extends Vue {
-  searchTerm = 'parent value'
+  searchTerm = 'hoge'
   result: AlbumSearchResult[] = []
-  get boxContents (): AlbumResultContents[] {
+  get boxContents (): AlbumResultBoxProps[] {
     return this.result.map(el => el.albumBoxContents)
   }
   doSearch (term: string) {
