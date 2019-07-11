@@ -27,6 +27,30 @@ export default class Home extends Vue {
   get boxContents (): AlbumResultBoxProps[] {
     return this.result.map(el => el.albumBoxContents)
   }
+  beforeCreate () {
+    alert('beforeCreate Home.vue')
+  }
+  created () {
+    alert('created Home.vue')
+  }
+  beforeMount () {
+    alert('beforeMount Home.vue')
+  }
+  mounted () {
+    alert('mounted Home.vue')
+  }
+  beforeUpdate () {
+    alert('beforeUpdate Home.vue')
+  }
+  updated () {
+    alert('updated Home.vue')
+  }
+  beforeDestroy () {
+    alert('beforeDestroy Home.vue')
+  }
+  destroyed () {
+    alert('destroyed Home.vue')
+  }
   doSearch (term: string) {
     if (!term) return
     axios.get(`https://itunes.apple.com/search?term=${encodeURI(term)}&entity=album`).then(

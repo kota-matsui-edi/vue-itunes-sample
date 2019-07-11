@@ -16,7 +16,30 @@ export default class SearchField extends Vue {
   @Prop({ default: '' }) private readonly term!:string
 
   serchTerm = ''
-
+  beforeCreate () {
+    alert('beforeCreate SearchField.vue')
+  }
+  created () {
+    alert('created SearchField.vue')
+  }
+  beforeMount () {
+    alert('beforeMount SearchField.vue')
+  }
+  mounted () {
+    alert('mounted SearchField.vue')
+  }
+  beforeUpdate () {
+    alert('beforeUpdate SearchField.vue')
+  }
+  updated () {
+    alert('updated SearchField.vue')
+  }
+  beforeDestroy () {
+    alert('beforeDestroy SearchField.vue')
+  }
+  destroyed () {
+    alert('destroyed SearchField.vue')
+  }
   @Watch('term', { immediate: true })
   onChangeTerm () {
     this.serchTerm = this.term
