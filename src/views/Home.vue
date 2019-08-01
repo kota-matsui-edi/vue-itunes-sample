@@ -33,7 +33,7 @@ import { searchItunesModule } from '@/stores/searchItunes'
 })
 export default class Home extends Vue {
   mediaOptions: VueSelectOption[] = [
-    { text: 'select media type', value: '' },
+    { text: '-', value: '' },
     { text: 'movie', value: 'movie' },
     { text: 'podcast', value: 'podcast' },
     { text: 'music', value: 'music' },
