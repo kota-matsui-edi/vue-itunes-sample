@@ -1,48 +1,29 @@
 <template>
   <div class="field has-addons">
     <p class="control">
-      <input class="input" type="text" placeholder="Find a repository" v-model="serchTerm">
+      <input class="input" type="text" placeholder="search term" v-model="searchTerm">
     </p>
     <p class="control">
-      <a class="button is-info" @click="$emit('search', serchTerm)">Search</a>
+      <a class="button is-info" @click="doSearch">Search</a>
     </p>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { searchItunesModule } from '@/stores/searchItunes'
+
 @Component
 export default class SearchField extends Vue {
-  @Prop({ default: '' }) private readonly term!:string
+  set searchTerm (value:string) {
+    searchItunesModule.updateQuery({ term: value })
+  }
 
-  serchTerm = ''
-  beforeCreate () {
-    alert('beforeCreate SearchField.vue')
+  get searchTerm (): string {
+    return searchItunesModule.getQuery.term
   }
-  created () {
-    alert('created SearchField.vue')
-  }
-  beforeMount () {
-    alert('beforeMount SearchField.vue')
-  }
-  mounted () {
-    alert('mounted SearchField.vue')
-  }
-  beforeUpdate () {
-    alert('beforeUpdate SearchField.vue')
-  }
-  updated () {
-    alert('updated SearchField.vue')
-  }
-  beforeDestroy () {
-    alert('beforeDestroy SearchField.vue')
-  }
-  destroyed () {
-    alert('destroyed SearchField.vue')
-  }
-  @Watch('term', { immediate: true })
-  onChangeTerm () {
-    this.serchTerm = this.term
+  doSearch () {
+    searchItunesModule.doSearch()
   }
 }
 </script>

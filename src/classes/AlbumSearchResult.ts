@@ -1,4 +1,4 @@
-import { AlbumResultBoxProps } from '@/components/box/AlbumResultBox.vue'
+import AlbumResultBoxProps from '@/classes/AlibumResultBoxProps'
 
 export default class AlbumSearchResult {
   result: APIresults.ItunesSearchAPI

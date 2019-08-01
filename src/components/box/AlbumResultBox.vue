@@ -30,21 +30,11 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-
-export class AlbumResultBoxProps {
-  public artistName = ''
-  public albumName = ''
-  public genre = ''
-  public albumArt = ''
-  constructor (init?:AlbumResultBoxProps) {
-    Object.assign(this, init)
-  }
-}
+import AlbumResultBoxProps from '@/classes/AlibumResultBoxProps'
 
 @Component
 export default class AlbumResultBox extends Vue {
   @Prop({ default: ():AlbumResultBoxProps => new AlbumResultBoxProps() }) private readonly contents!:AlbumResultBoxProps
-
   get artistName (): string {
     return this.contents.artistName
   }

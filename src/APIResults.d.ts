@@ -31,5 +31,19 @@ declare module APIresults {
       primaryGenreName: string;
   }
 
+  export type Media = 'movie' | 'podcast' | 'music' | 'musicVideo' | 'audiobook' | 'shortFilm' | 'tvShow' | 'software' | 'ebook' | 'all'
+  export type YN = 'Yes' | 'No'
+  export interface ItunesSearchQueryAPI {
+    term: string;
+    country: string;
+    media?: Media;
+    entity?: string;
+    attribute?: string;
+    callback?: string;
+    limit?: number;
+    lang?: string;
+    version?: number;
+    explicit?: YN;
+  }
 }
 
